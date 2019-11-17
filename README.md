@@ -2,6 +2,8 @@
 
 Make a mega menu with animation(on click) for desktop. 
 
+![](https://s3.invisionapp-cdn.com/storage.invisionapp.com/screens/files/379655259.gif?x-amz-meta-iv=1&response-cache-control=max-age%3D2419200&x-amz-meta-ck=2cddb19abc6bdb00f1fae72d9f94812e&AWSAccessKeyId=AKIAJFUMDU3L6GTLUDYA&Expires=1577836800&Signature=EteDpmxWvtdlm99n%2B%2Bx97nBZza4%3D&1574026711198)
+
 ## Available Scripts
 
 In the project directory, you can run:
