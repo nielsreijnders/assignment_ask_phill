@@ -1,0 +1,27 @@
+.header {
+  font-family: Gothic Extended, sans-serif;
+  font-size: .69444vw;
+  padding: 3.47222vw 4.51389vw;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.heading_logo {
+  width: 10.41667vw;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.nav {
+  li {
+    display: inline-block;
+    margin-left: 1.38889vw;
+    &:first-child {
+      margin: 0;
+    }
+  }
+}
