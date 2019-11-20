@@ -22,7 +22,7 @@ export default class LoaderBlock extends Component {
     return (
       <div ref={this.text} className={styles.container}>
         <div className={styles.loader_text}>
-          <p>Looking for an internship <span role="img" aria-label="cloud">⛈</span></p>
+          <p>Empty</p>
         </div>
       </div>
     )
