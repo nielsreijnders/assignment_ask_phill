@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
 import './scss/global/global.scss';
-import Header from './components/headerBlock/headerBlock'
+import Header from './components/menuBlock/MenuBlock'
 // import LoaderBlock from './components/loaderBlock/LoaderBlock'
 
 function App() {

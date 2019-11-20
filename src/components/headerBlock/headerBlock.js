@@ -3,11 +3,12 @@ import styles from './headerblock.module.scss';
 import Logo from '../../svg/Logo'
 
 export default class headerBlock extends Component {
+
   render() {
     return (
       <header className={styles.header}>
         <ul className={styles.nav}>
-          <li>Shop</li>
+          <li onClick={this.props.onClick}>Shop</li>
           <li>Historie</li>
           <li>Silhouettes</li>
           <li>Boutiques</li>
