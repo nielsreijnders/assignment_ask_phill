@@ -4,73 +4,78 @@ import styles from './menuBlock.module.scss'
 import { TweenMax, TimelineMax, Expo } from 'gsap'
 
 const array = [
-  {"id" : 0, "title" : "Catégories", "listItems" : ["VENTES PRIVÉES", "NOUVEAUTÉS", "TOUS LES PRODUITS", "BLOUSONS, MANTEAUX & PARKAS", "VESTES DE PEINTRE", "CHEMISES", "COSTUMES", "CUIR", "DENIM", "PANTALONS & CHINOS", "PULLS & SWEATS", "T-SHIRTS & POLOS", "CHAUSSURES"]}, 
-  {"id" : 1, "title" : "Accessoires", "listItems" : ["CHAUSSETTES", "ECHARPES", "GANTS", "MAROQUINERIE"]},
-  {"id" : 2, "title" : "Sélection", "listItems" : ["NOS ICONIQUES", "WEEK-END", "PETITS PRIX"]}
+  {"title" : "Catégories", "listItems" : ["VENTES PRIVÉES", "NOUVEAUTÉS", "TOUS LES PRODUITS", "BLOUSONS, MANTEAUX & PARKAS", "VESTES DE PEINTRE", "CHEMISES", "COSTUMES", "CUIR", "DENIM", "PANTALONS & CHINOS", "PULLS & SWEATS", "T-SHIRTS & POLOS", "CHAUSSURES"]}, 
+  {"title" : "Accessoires", "listItems" : ["CHAUSSETTES", "ECHARPES", "GANTS", "MAROQUINERIE"]},
+  {"title" : "Sélection", "listItems" : ["NOS ICONIQUES", "WEEK-END", "PETITS PRIX"]}
 ]
 
 export default class MenuBlock extends Component {
 
   constructor(props) {
     super(props);
-    this.container = React.createRef();
-    this.grid = React.createRef();
-    this.line = React.createRef();
+    this.container = null;
+    this.grid = null;
+    this.line = null;
+    this.overlay = null;
+    this.cta = null;
+    this.h3 = [];
+    this.p = [];
+    this.tl = new TimelineMax({ paused: true });
   }
 
   createListItem = () => {
-    return array.map( hit  =>  
-      <div key={hit.id}>
-        <h3 className="h3_menu">{hit.title}</h3>
+    return array.map( (hit, index)  =>  
+      <div key={index}>
+        <h3 ref={h3 => this.h3[index] = h3}>{hit.title}</h3>
         <ul>
-          { hit.listItems.map(hit => {return ( <li>{hit}</li> )})}
+          { hit.listItems.map((hit, index) => {return ( <li key={index}>{hit}</li> )})}
         </ul>
       </div>
     )
   }
 
   componentDidMount() {
-    TweenMax.set(this.container.current, {yPercent: -100});
-  }
-
-  handleOnClick = () => {
-    const tl = new TimelineMax();
-    tl
-      .fromTo(this.container.current, 1.4, {yPercent: -100}, {yPercent: 0, ease: Expo.easeInOut})
-      .fromTo(this.grid.current, 1.4, {yPercent: 150, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .fromTo(".h3_menu", 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .fromTo(this.grid.current.line, 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .fromTo(".cta", 1.4, {yPercent: 100, scale:1.2, rotation: 4}, {yPercent: 0, scale: 1, rotation: 0, ease: Expo.easeInOut}, 0)
-      .fromTo(".cta p", 1.4, {yPercent: 200}, {yPercent: 0, ease: Expo.easeInOut}, 0)
-      .fromTo(".cta button", 1.4, {yPercent: 200, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .to(".overlay", 1.4, {autoAlpha: 1, ease: Expo.easeInOut},0)
+    TweenMax.set(this.container, {yPercent: -100});
+    this.tl
+      .fromTo(this.container, 1.4, {yPercent: -100}, {yPercent: 0, ease: Expo.easeInOut})
+      .fromTo(this.grid, 1.4, {yPercent: 150, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
+      .fromTo(this.h3, 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
+      .fromTo(this.line, 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: .1, ease: Expo.easeInOut}, 0)
+      .fromTo(this.cta, 1.4, {yPercent: 100, scale:1.2, rotation: 4}, {yPercent: 0, scale: 1, rotation: 0, ease: Expo.easeInOut}, 0)
+      .fromTo(this.p, 1.4, {yPercent: 200}, {yPercent: 0, ease: Expo.easeInOut}, 0)
+      .fromTo(this.cta.children[1].childNodes[2], 1.4, {yPercent: 200, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
+      .to(this.overlay, 1.4, {autoAlpha: 1, ease: Expo.easeInOut},0)
   }
 
   render() {
     return (
       <>
-        <div ref={this.container} className={styles.container}>
+        <div ref={div => this.container = div} className={styles.container}>
 
           {/* First half */}
-          <div ref={this.line} className={styles.line}></div>
+          <div ref={div => this.line = div} className={styles.line}></div>
           <div className={styles.flex}>
-            <div ref={this.grid}  className={styles.mega_menu}>
+            <div ref={div => this.grid = div} className={styles.mega_menu}>
               {this.createListItem()}
             </div>
 
             {/* second half */}
-            <div className={styles.image_container + ` cta`}>
+            <div className={styles.image_container} ref={div => this.cta = div}>
               <img src="https://images.unsplash.com/photo-1562886812-41775a01195d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80" alt="plaatje"></img>
               <div className={styles.heading_text}>
-                <p><strong>La nouvelle</strong></p>
-                <p>collection Automne / Hiver 2019</p>
+                <p ref={p => this.p[0] = p}><strong>La nouvelle</strong></p>
+                <p ref={p => this.p[1] = p}>collection Automne / Hiver 2019</p>
                 <button className={styles.button}><a href="/">Decouvrir</a></button>
               </div>
             </div>
           </div>
         </div>
-        <div className={styles.overlay + ` overlay`}></div>
-        <HeaderBlock onClick={this.handleOnClick} />
+
+        {/* Overlay */}
+        <div className={styles.overlay} ref={div => this.overlay = div}></div>
+
+        {/* Only for this example:-) */}
+        <HeaderBlock onClick={() =>  this.tl.play()} />
       </>
     )
   }
