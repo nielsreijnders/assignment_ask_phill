@@ -19,16 +19,13 @@ export default class MenuBlock extends Component {
   }
 
   createListItem = () => {
-    const listItems = array.map( hit  =>  
+    return array.map( hit  =>  
       <div key={hit.id}>
         <h3 className="h3_menu">{hit.title}</h3>
         <ul>
           { hit.listItems.map(hit => {return ( <li>{hit}</li> )})}
         </ul>
       </div>
-    )
-    return (
-      listItems
     )
   }
 
