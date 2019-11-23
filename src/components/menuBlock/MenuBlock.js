@@ -3,11 +3,7 @@ import HeaderBlock from '../headerBlock/headerBlock'
 import styles from './menuBlock.module.scss'
 import { TweenMax, TimelineMax, Expo } from 'gsap'
 
-const array = [
-  {"title" : "Catégories", "listItems" : ["VENTES PRIVÉES", "NOUVEAUTÉS", "TOUS LES PRODUITS", "BLOUSONS, MANTEAUX & PARKAS", "VESTES DE PEINTRE", "CHEMISES", "COSTUMES", "CUIR", "DENIM", "PANTALONS & CHINOS", "PULLS & SWEATS", "T-SHIRTS & POLOS", "CHAUSSURES"]}, 
-  {"title" : "Accessoires", "listItems" : ["CHAUSSETTES", "ECHARPES", "GANTS", "MAROQUINERIE"]},
-  {"title" : "Sélection", "listItems" : ["NOS ICONIQUES", "WEEK-END", "PETITS PRIX"]}
-]
+const array = [{ "title": "Catégories", "listItems": ["VENTES PRIVÉES", "NOUVEAUTÉS", "TOUS LES PRODUITS", "BLOUSONS, MANTEAUX & PARKAS", "VESTES DE PEINTRE", "CHEMISES", "COSTUMES", "CUIR", "DENIM", "PANTALONS & CHINOS", "PULLS & SWEATS", "T-SHIRTS & POLOS", "CHAUSSURES"] }, { "title": "Accessoires", "listItems": ["CHAUSSETTES", "ECHARPES", "GANTS", "MAROQUINERIE"] },{ "title": "Sélection", "listItems": ["NOS ICONIQUES", "WEEK-END", "PETITS PRIX"] }]
 
 export default class MenuBlock extends Component {
 
@@ -25,41 +21,41 @@ export default class MenuBlock extends Component {
   }
 
   createListItem = () => {
-    return array.map( (hit, index)  =>  
+    return array.map((hit, index) =>
       <div key={index}>
         <h3 ref={h3 => this.h3[index] = h3}>{hit.title}</h3>
         <ul>
-          { hit.listItems.map((hit, index) => {return ( <li key={index}>{hit}</li> )})}
+          {hit.listItems.map((hit, index) => { return (<li key={index}>{hit}</li>) })}
         </ul>
       </div>
     )
   }
 
   componentDidMount() {
-    
+
     // Init
-    TweenMax.set(this.container, {yPercent: -100});
+    TweenMax.set(this.container, { yPercent: -100 });
 
     // Animation
     this.tl
-      .fromTo(this.container, 1.4, {yPercent: -100}, {yPercent: 0, ease: Expo.easeInOut})
-      .fromTo(this.grid, 1.4, {yPercent: 150, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .fromTo(this.h3, 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .fromTo(this.line, 1.4, {yPercent: 100, opacity: 0}, {yPercent: 0, opacity: .1, ease: Expo.easeInOut}, 0)
-      .fromTo(this.cta, 1.4, {yPercent: 100, scale:1.2, rotation: 4}, {yPercent: 0, scale: 1, rotation: 0, ease: Expo.easeInOut}, 0)
-      .fromTo(this.p, 1.4, {yPercent: 200}, {yPercent: 0, ease: Expo.easeInOut}, 0)
-      .fromTo(this.cta.children[1].childNodes[2], 1.4, {yPercent: 200, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .to(this.overlay, 1.4, {autoAlpha: 1, ease: Expo.easeInOut},0);
+      .fromTo(this.container, 1.4, { yPercent: -100 }, { yPercent: 0, ease: Expo.easeInOut })
+      .fromTo(this.grid, 1.4, { yPercent: 150, opacity: 0 }, { yPercent: 0, opacity: 1, ease: Expo.easeInOut }, 0)
+      .fromTo(this.h3, 1.4, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, ease: Expo.easeInOut }, 0)
+      .fromTo(this.line, 1.4, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: .1, ease: Expo.easeInOut }, 0)
+      .fromTo(this.cta, 1.4, { yPercent: 100, scale: 1.2, rotation: 4 }, { yPercent: 0, scale: 1, rotation: 0, ease: Expo.easeInOut }, 0)
+      .fromTo(this.p, 1.4, { yPercent: 200 }, { yPercent: 0, ease: Expo.easeInOut }, 0)
+      .fromTo(this.cta.children[1].childNodes[2], 1.4, { yPercent: 200, opacity: 0 }, { yPercent: 0, opacity: 1, ease: Expo.easeInOut }, 0)
+      .to(this.overlay, 1.4, { autoAlpha: 1, ease: Expo.easeInOut }, 0);
   }
 
   handleOnClick = () => {
     this.tl.play();
-    TweenMax.set(this.element.selected.current, { className: "selected"});
+    TweenMax.set(this.element.selected.current, { className: "selected" });
   }
 
   handleOnClickClosed = () => {
     this.tl.reverse();
-    TweenMax.set(this.element.selected.current, { className: "-selected"});
+    TweenMax.set(this.element.selected.current, { className: "-selected" });
   }
 
   render() {
