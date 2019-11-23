@@ -3,6 +3,12 @@ import HeaderBlock from '../headerBlock/headerBlock'
 import styles from './menuBlock.module.scss'
 import { TweenMax, TimelineMax, Expo } from 'gsap'
 
+const array = [
+  {"id" : 0, "title" : "Catégories", "listItems" : ["VENTES PRIVÉES", "NOUVEAUTÉS", "TOUS LES PRODUITS", "BLOUSONS, MANTEAUX & PARKAS", "VESTES DE PEINTRE", "CHEMISES", "COSTUMES", "CUIR", "DENIM", "PANTALONS & CHINOS", "PULLS & SWEATS", "T-SHIRTS & POLOS", "CHAUSSURES"]}, 
+  {"id" : 1, "title" : "Accessoires", "listItems" : ["CHAUSSETTES", "ECHARPES", "GANTS", "MAROQUINERIE"]},
+  {"id" : 2, "title" : "Sélection", "listItems" : ["NOS ICONIQUES", "WEEK-END", "PETITS PRIX"]}
+]
+
 export default class MenuBlock extends Component {
 
   constructor(props) {
@@ -12,9 +18,22 @@ export default class MenuBlock extends Component {
     this.line = React.createRef();
   }
 
+  createListItem = () => {
+    const listItems = array.map( hit  =>  
+      <div key={hit.id}>
+        <h3 className="h3_menu">{hit.title}</h3>
+        <ul>
+          { hit.listItems.map(hit => {return ( <li>{hit}</li> )})}
+        </ul>
+      </div>
+    )
+    return (
+      listItems
+    )
+  }
+
   componentDidMount() {
     TweenMax.set(this.container.current, {yPercent: -100});
-    console.log(this.grid)
   }
 
   handleOnClick = () => {
@@ -34,46 +53,15 @@ export default class MenuBlock extends Component {
     return (
       <>
         <div ref={this.container} className={styles.container}>
+
+          {/* First half */}
           <div ref={this.line} className={styles.line}></div>
           <div className={styles.flex}>
             <div ref={this.grid}  className={styles.mega_menu}>
-              {/* Ik zou graag alle data willen mappen, alleen ik heb geen API of iets 👀 */}
-              <div >
-                <h3 className="h3_menu">Catégories</h3>
-                <ul>
-                  <li>VENTES PRIVÉES</li>
-                  <li>NOUVEAUTÉS</li>
-                  <li>TOUS LES PRODUITS</li>
-                  <li>BLOUSONS, MANTEAUX & PARKAS</li>
-                  <li>VESTES DE PEINTRE</li>
-                  <li>CHEMISES</li>
-                  <li>COSTUMES</li>
-                  <li>CUIR</li>
-                  <li>DENIM</li>
-                  <li>PANTALONS & CHINOS</li>
-                  <li>PULLS & SWEATS</li>
-                  <li>T-SHIRTS & POLOS</li>
-                  <li>CHAUSSURES</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="h3_menu">Accessoires</h3>
-                <ul>
-                  <li>CHAUSSETTES</li>
-                  <li>ECHARPES</li>
-                  <li>GANTS</li>
-                  <li>MAROQUINERIE</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="h3_menu">Sélection</h3>
-                <ul>
-                  <li>NOS ICONIQUES</li>
-                  <li>WEEK-END</li>
-                  <li>PETITS PRIX</li>
-                </ul>
-              </div>
+              {this.createListItem()}
             </div>
+
+            {/* second half */}
             <div className={styles.image_container + ` cta`}>
               <img src="https://images.unsplash.com/photo-1562886812-41775a01195d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80" alt="plaatje"></img>
               <div className={styles.heading_text}>
@@ -84,9 +72,7 @@ export default class MenuBlock extends Component {
             </div>
           </div>
         </div>
-        <div className={styles.overlay + ` overlay`}>
-
-        </div>
+        <div className={styles.overlay + ` overlay`}></div>
         <HeaderBlock onClick={this.handleOnClick} />
       </>
     )
