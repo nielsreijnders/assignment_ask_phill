@@ -21,6 +21,7 @@ export default class MenuBlock extends Component {
     this.h3 = [];
     this.p = [];
     this.tl = new TimelineMax({ paused: true });
+    this.element = null;
   }
 
   createListItem = () => {
@@ -35,7 +36,11 @@ export default class MenuBlock extends Component {
   }
 
   componentDidMount() {
+    
+    // Init
     TweenMax.set(this.container, {yPercent: -100});
+
+    // Animation
     this.tl
       .fromTo(this.container, 1.4, {yPercent: -100}, {yPercent: 0, ease: Expo.easeInOut})
       .fromTo(this.grid, 1.4, {yPercent: 150, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
@@ -44,7 +49,17 @@ export default class MenuBlock extends Component {
       .fromTo(this.cta, 1.4, {yPercent: 100, scale:1.2, rotation: 4}, {yPercent: 0, scale: 1, rotation: 0, ease: Expo.easeInOut}, 0)
       .fromTo(this.p, 1.4, {yPercent: 200}, {yPercent: 0, ease: Expo.easeInOut}, 0)
       .fromTo(this.cta.children[1].childNodes[2], 1.4, {yPercent: 200, opacity: 0}, {yPercent: 0, opacity: 1, ease: Expo.easeInOut}, 0)
-      .to(this.overlay, 1.4, {autoAlpha: 1, ease: Expo.easeInOut},0)
+      .to(this.overlay, 1.4, {autoAlpha: 1, ease: Expo.easeInOut},0);
+  }
+
+  handleOnClick = () => {
+    this.tl.play();
+    TweenMax.set(this.element.selected.current, { className: "selected"});
+  }
+
+  handleOnClickClosed = () => {
+    this.tl.reverse();
+    TweenMax.set(this.element.selected.current, { className: "-selected"});
   }
 
   render() {
@@ -72,10 +87,10 @@ export default class MenuBlock extends Component {
         </div>
 
         {/* Overlay */}
-        <div className={styles.overlay} ref={div => this.overlay = div}></div>
+        <div onClick={this.handleOnClickClosed} className={styles.overlay} ref={div => this.overlay = div}></div>
 
         {/* Only for this example:-) */}
-        <HeaderBlock onClick={() =>  this.tl.play()} />
+        <HeaderBlock ref={li => this.element = li} onClick={this.handleOnClick} />
       </>
     )
   }
